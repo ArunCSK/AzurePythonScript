@@ -37,9 +37,11 @@ def print_properties(props):
         print("\t\tProvisioning State: {}".format(props.provisioning_state))
         print("\n\n")
 
-# WEST_US = "westus"
-# GROUP_NAME = "ArunPythonScriptResource"
-# resource_group_params = {"location": "westus"}
+        WEST_US = "westus"
+        GROUP_NAME = "ArunPythonScriptResource"
+        resource_group_params = {"location": "westus"}
 
-# print("Create Resource Group")
-# print_item(client.resource_groups.create_or_update(GROUP_NAME, resource_group_params))
+        # print("Create Resource Group")
+        # print_item(client.resource_groups.create_or_update(GROUP_NAME, resource_group_params))
+
+        
