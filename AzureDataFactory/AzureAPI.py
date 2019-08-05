@@ -4,6 +4,7 @@ from azure.mgmt.datafactory import DataFactoryManagementClient
 from azure.mgmt.datafactory.models import *
 from datetime import datetime, timedelta
 import time
+import os
 
 
 def print_item(group):
@@ -38,7 +39,7 @@ def print_activity_run_details(activity_run):
 def main():
 
     # Azure subscription ID
-    subscription_id = ''
+    subscription_id = os.environ.get('AZURE_SUBSCRIPTION_ID')
 
     # This program creates this resource group. If it's an existing resource group, comment out the code that creates the resource group
     rg_name = 'ArunScriptResource'
