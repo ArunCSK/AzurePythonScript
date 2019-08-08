@@ -12,6 +12,7 @@ response = requests.post(
     "cluster_name": "AzurePythonScriptCluster",
     "spark_version": "4.2.x-scala2.11",
     "node_type_id": "Standard_D3_v2",
+     "autotermination_minutes": 120,
     'spark_env_vars': {
         'PYSPARK_PYTHON': '/databricks/python3/bin/python3',
     }

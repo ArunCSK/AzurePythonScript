@@ -1,0 +1,8 @@
+curl -n \ -F filedata=@"/home/admin1/Desktop/tweets.py" \ -F path="/docs/" \ -F overwrite=true \ https://TweetDataBricks/api/2.0/dbfs/put
+curl -n -F filedata=@"/home/admin1/Desktop/tweets.py" -F path="/docs/sparkpi2.py" -F overwrite=true https://eastus.azuredatabricks.net/api/2.0/dbfs/put
+
+
+
+curl -n https://eastus.azuredatabricks.net/api/2.0/clusters/spark-versions
+curl -n https://eastus.azuredatabricks.net/api/2.0/clusters/spark-versions
+

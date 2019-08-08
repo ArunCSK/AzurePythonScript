@@ -19,66 +19,59 @@ FACTORY_NAME = "AzureDataFactoryusingPythonScript"
 PIPELINE_NAME = "AzurePiplineuingPythonScript"
 
 BODY = {
-  "properties": {
-    "activities": [
-      {
-        "type": "ForEach",
-        "typeProperties": {
-          "isSequential": False,
-          "items": {
-            "value": "@pipeline().parameters.OutputBlobNameList",
-            "type": "Expression"
-          },
-          "activities": [
+	 "name": "AzurePiplineuingPythonScript",
+	 "properties": {
+	 "activities": [
             {
-              "type": "DatabricksNotebookActivity",
-              "description": "DatabricksNotebookActivity",
-                "sink": {
-                  "type": "BlobSink"
+                "name": "ArunNotebook",
+                "type": "DatabricksNotebook",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "7.00:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": False,
+                    "secureInput": False
                 },
-                "dataIntegrationUnits": 32
-              },
-              "inputs": [
-                {
-                  "referenceName": "Dataset1",
-                  "parameters": {
-                    "MyFolderPath": "tweetstorages",
-                    "MyFileName": "tweet.pkl"
-                  },
-                  "type": "DatasetReference"
-                }
-              ],
-              "outputs": [
-                {
-                  "referenceName": "Dataset2",
-                  "parameters": {
-                    "MyFolderPath": "tweetstorages",
-                    "MyFileName": {
-                      "value": "@item()",
-                      "type": "Expression"
+				"linkedServiceName": {
+					"referenceName": "AzureDatabricksLinkedService",
+					"type": "LinkedServiceReference"
+				},
+                "userProperties": [],
+				 "typeProperties": {
+                    "notebookPath": "/Arun/googlenotebook",
+                    "baseParameters": {
+                        "input": {
+                            "value": "@pipeline().parameters.inputPath",
+                            "type": "Expression"
+                        },
+                        "output": {
+                            "value": "@pipeline().parameters.outputPath",
+                            "type": "Expression"
+                        },
+                        "filename": {
+                            "value": "@pipeline().parameters.filename",
+                            "type": "Expression"
+                        }
                     }
-                  },
-                  "type": "DatasetReference"
                 }
-              ],
-              "name": "ExampleCopyActivity"
             }
-          ]
+        ],
+		 "parameters": {
+            "inputPath": {
+                "type": "string",
+                "defaultValue": "/input"
+            },
+            "outputPath": {
+                "type": "string",
+                "defaultValue": "/output"
+            },
+            "filename": {
+                "type": "string",
+                "defaultValue": "Google_Stock_Price_Train.csv"
+            }
         },
-        "name": "ExampleForeachActivity"
-      }
-    ],
-    "parameters": {
-      "OutputBlobNameList": {
-        "type": "Array"
-      }
-    },
-    "variables": {
-      "TestVariableArray": {
-        "type": "Array"
-      }
-    }
-  }
+	 }
 }
 
 API_VERSION = '2018-06-01'
