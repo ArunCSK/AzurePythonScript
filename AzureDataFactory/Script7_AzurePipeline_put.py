@@ -24,7 +24,7 @@ BODY = {
 	 "activities": [
             {
                 "name": "ArunNotebook",
-                "type": "DatabricksNotebook",
+                "type": "DatabricksSparkPython",
                 "dependsOn": [],
                 "policy": {
                     "timeout": "7.00:00:00",
@@ -38,29 +38,43 @@ BODY = {
 					"type": "LinkedServiceReference"
 				},
                 "userProperties": [],
-				 "typeProperties": {
-                    "notebookPath": "/Arun/googlenotebook",
-                    "baseParameters": {
-                        "input": {
-                            "value": "@pipeline().parameters.inputPath",
-                            "type": "Expression"
-                        },
-                        "output": {
-                            "value": "@pipeline().parameters.outputPath",
-                            "type": "Expression"
-                        },
-                        "filename": {
-                            "value": "@pipeline().parameters.filename",
-                            "type": "Expression"
-                        }
+                "typeProperties": {
+                        "pythonFile": "dbfs/docs/sparkpi2.py",
+                        "parameters": [
+                            "10"
+                        ],
+                        "libraries": [
+                            {
+                                "pypi": {
+                                    "package": "tensorflow"
+                                }
+                            }
+                        ]
                     }
                 }
-            }
+				#  "typeProperties": {
+                    # "notebookPath": "/Users/arun.subburaj1@cgm4l.onmicrosoft.com/empty",
+                    # "baseParameters": {
+                    #     "input": {
+                    #         "value": "@pipeline().parameters.inputPath",
+                    #         "type": "Expression"
+                    #     },
+                    #     "output": {
+                    #         "value": "@pipeline().parameters.outputPath",
+                    #         "type": "Expression"
+                    #     },
+                    #     "filename": {
+                    #         "value": "@pipeline().parameters.filename",
+                    #         "type": "Expression"
+                    #     }
+                    # }
+                
+            
         ],
 		 "parameters": {
             "inputPath": {
                 "type": "string",
-                "defaultValue": "/input"
+                "defaultValue": "dbfs/docs/"
             },
             "outputPath": {
                 "type": "string",
@@ -68,7 +82,7 @@ BODY = {
             },
             "filename": {
                 "type": "string",
-                "defaultValue": "Google_Stock_Price_Train.csv"
+                "defaultValue": "sparkpi2.py"
             }
         },
 	 }
@@ -99,7 +113,8 @@ def run_example():
 
     operation_config = {}
     # request = service_client.put("/subscriptions/" + SUBSCRIPTION_ID + "/resourceGroups/" + RESOURCE_GROUP + "/providers/Microsoft.DataFactory/factories/" + FACTORY_NAME, query_parameters)
-    request = service_client.put("/subscriptions/"+SUBSCRIPTION_ID+"/resourceGroups/"+RESOURCE_GROUP+"/providers/Microsoft.DataFactory/factories/"+FACTORY_NAME+"/pipelines/"+PIPELINE_NAME , query_parameters)
+    request = service_client.post("/subscriptions/"+SUBSCRIPTION_ID+"/resourceGroups/"+RESOURCE_GROUP+"/providers/Microsoft.DataFactory/factories/"+FACTORY_NAME+"/pipelines/"+PIPELINE_NAME+"/createRun" , query_parameters)
+    #request = service_client.put("/subscriptions/"+SUBSCRIPTION_ID+"/resourceGroups/"+RESOURCE_GROUP+"/providers/Microsoft.DataFactory/factories/"+FACTORY_NAME+"/pipelines/"+PIPELINE_NAME , query_parameters)
     response = service_client.send(request, header_parameters, BODY, **operation_config)
     print(response.text)
 
