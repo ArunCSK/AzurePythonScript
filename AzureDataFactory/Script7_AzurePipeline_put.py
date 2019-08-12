@@ -68,6 +68,18 @@ BODY = {
                     #         "type": "Expression"
                     #     }
                     # }
+		 "parameters": {
+            "inputPath": {
+                "type": "string",
+                "defaultValue": "dbfs/docs/"
+            },
+            "outputPath": {
+                "type": "string",
+                "defaultValue": "/output"
+            },
+            "filename": {
+                "type": "string",
+                "defaultValue": 
                 
             
         ],
